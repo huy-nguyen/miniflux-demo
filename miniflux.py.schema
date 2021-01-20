@@ -1,0 +1,54 @@
+imports:
+  - path: https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-foundation-toolkit/3c1c1c3/dm/templates/cloud_sql/cloud_sql.py
+    name: cloud-sql.py
+  - path: https://raw.githubusercontent.com/GoogleCloudPlatform/cloud-foundation-toolkit/3c1c1c3/dm/templates/network/network.py
+    name: network.py
+
+required:
+  - region
+  - zone
+  - cloudSqlInstanceName
+  - privateServicesAccessIpRange
+  - serverlessVpcAccessConnectorIpRange
+  - sqlMachineInstanceType
+  - dbUserPassword
+
+properties:
+  region:
+    type: string
+
+  zone:
+    type: string
+
+  cloudSqlInstanceName:
+    type: string
+    description: |
+      Important note: If you have deleted a Cloud SQL instance, you CANNOT re-use that name within 7 days.
+
+  privateServicesAccessIpRange:
+    type: object
+    required:
+      - startingAddress
+      - prefixLength
+    properties:
+      startingAddress:
+        type: string
+      prefixLength:
+        type: integer
+
+  serverlessVpcAccessConnectorName:
+    type: string
+
+  serverlessVpcAccessConnectorIpRange:
+    type: string
+
+  sqlMachineInstanceType:
+    type: string
+  sqlInstanceDiskType:
+    type: string
+  dbName:
+    type: string
+  dbUserName:
+    type: string
+  dbUserPassword:
+    type: string

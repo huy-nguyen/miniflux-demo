@@ -1,0 +1,16 @@
+imports:
+  - path: miniflux.py
+
+resources:
+  - name: miniflux-app
+    type: miniflux.py
+    properties:
+      region: us-east1
+      privateServicesAccessIpRange:
+        startingAddress: 192.168.16.0
+        prefixLength: 20
+      serverlessVpcAccessConnectorIpRange: 10.8.0.16/28
+      sqlMachineInstanceType: db-f1-micro
+      zone: us-east1-d
+      cloudSqlInstanceName: my-sql-instance-1
+      dbUserPassword: pick-a-strong-password

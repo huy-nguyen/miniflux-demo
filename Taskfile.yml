@@ -1,0 +1,42 @@
+version: "3"
+
+dotenv: [".env"]
+
+vars:
+  APP_DEPLOYMENT: miniflux-deployment
+tasks:
+  dm:create-vpc-access-type-provider: >
+    gcloud beta deployment-manager
+    type-providers create vpc-access-v1
+    --descriptor-url='https://vpcaccess.googleapis.com/$discovery/rest?version=v1'
+    --api-options-file=vpc-access-connector-type-provider.yaml
+    --project $DM_PROJECT_ID
+  dm:create-service-networking-type-provider: >
+    gcloud beta deployment-manager
+    type-providers create service-networking-v1
+    --descriptor-url='https://servicenetworking.googleapis.com/$discovery/rest?version=v1'
+    --api-options-file=service-networking-type-provider.yaml
+    --project $DM_PROJECT_ID
+
+  dm:create-empty-deployment: >
+    gcloud deployment-manager deployments
+    create {{.APP_DEPLOYMENT}}
+    --config empty.yaml
+    --project $DM_PROJECT_ID
+
+  dm:preview-deployment: >
+    gcloud deployment-manager deployments
+    update {{.APP_DEPLOYMENT}}
+    --config miniflux.yaml
+    --project $DM_PROJECT_ID
+    --preview
+
+  dm:commit-deployment: >
+    gcloud deployment-manager deployments
+    update {{.APP_DEPLOYMENT}}
+    --project $DM_PROJECT_ID
+
+  dm:delete-deployment: >
+    gcloud deployment-manager deployments
+    delete {{.APP_DEPLOYMENT}}
+    --project $DM_PROJECT_ID
