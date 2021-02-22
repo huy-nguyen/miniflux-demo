@@ -14,15 +14,15 @@ This is a case study to compare these two Infrastructure-as-Code tools.
 ## Terraform
 
 - Create a GCP project and a service account (henceforth called the Terraform service account) that will be used by Terraform to provision GCP resources.
-  Set this project ID as the value of the `project` argument of the `provider "google"` block in [`main.tf`](main.tf).
-- Follow the [instructions here](https://github.com/huy-nguyen/terraform-google-miniflux/tree/v4.0.0#prerequisites) to enable the appropriate APIs for the project and IAM roles for the Terraform service account.
+  Set this project ID as the value of the `project_id` argument in [`main.tf`](main.tf).
+- Follow the [instructions here](https://github.com/huy-nguyen/terraform-google-miniflux/tree/v5.0.2#prerequisites) to enable the appropriate APIs for the project and IAM roles for the Terraform service account.
   Following the principle of least privilege, I've tried to keep the number of APIs and IAM roles as small as possible
-- [Create a JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-console) containing the credentials of the service account, download it into the project directory and set the filename as the value of the `credentials` argument in the `google "provider"` block in [`main.tf`](main.tf).
+- [Create a JSON key file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-console) containing the credentials of the service account, download it into the project directory and set the value of the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the relative path to this JSON key file.
 - Run `terraform init` to download all required Terraform modules.
   This command only needs to be run once.
-- Edit [`main.tf`](main.tf), the top-level configuration, to your liking (based on the available input variables listed in [variables.tf](https://github.com/huy-nguyen/terraform-google-miniflux/blob/v4.0.0/variables.tf)), then run `terraform apply` to create the resources.
+- Edit [`main.tf`](main.tf), the top-level configuration, to your liking (based on the available input variables listed in [variables.tf](https://github.com/huy-nguyen/terraform-google-miniflux/blob/v5.0.2/variables.tf)), then run `terraform apply` to create the resources.
 - Run `terraform output` to get the output values that will be necessary in the next step.
-- Follow the [instructions here](https://github.com/huy-nguyen/terraform-google-miniflux/tree/v4.0.0#deployment-to-app-engine) to deploy Miniflux to App Engine using the outputs from the previous step.
+- Follow the [instructions here](https://github.com/huy-nguyen/terraform-google-miniflux/tree/v5.0.2#deployment-to-app-engine) to deploy Miniflux to App Engine using the outputs from the previous step.
 - Once you are done, tear down the infrastructure by running `terraform destroy`.
 
 ## Google Cloud Deployment Manager
